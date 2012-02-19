@@ -98,8 +98,8 @@
 	  <label>Área *<span class='small'>Para onde vai esse ítem?</span></label>
 	  <select name='area' id='area' class='required'>
 		<option>Selecione</option>
-		<option value='Area' <?php if($val['area']=='Area') echo ' selected';?>>Area</option>
-		<option value='Categoria' <?php if($val['area']=='Categoria') echo ' selected';?>>Categoria</option>
+		<option value='Pet' <?php if($val['area']=='Pet') echo ' selected';?>>Pet</option>
+		<option value='Adesivo' <?php if($val['area']=='Adesivo') echo ' selected';?>>Adesivo</option>
 	  </select>
 	</li>
 

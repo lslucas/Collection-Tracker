@@ -68,7 +68,7 @@ $sql = "SELECT  ${var['pre']}_id,
    /*
     *area
     */
-	$area = array('Area', 'Categoria');
+	$area = array('Pet', 'Adesivo');
 	foreach($area as $id) {
 
 		if($whr<>$id) 
