@@ -3,7 +3,7 @@
   /*
    *busca total de itens e faz variaveis de paginação
    */
-  $sql_letras = "SELECT UPPER(LEFT(cad_nome, 1)) FROM ".TABLE_PREFIX."_${var['path']} GROUP BY LEFT(cad_nome, 1) ORDER BY cad_nome";
+  $sql_letras = "SELECT UPPER(LEFT(cad_login, 1)) FROM ".TABLE_PREFIX."_${var['path']} GROUP BY LEFT(cad_login, 1) ORDER BY cad_login";
 
   if($qry_letras = $conn->prepare($sql_letras)) {
 
@@ -37,7 +37,7 @@
 
   $where = '';
   if( isset($_GET['letra']) && !empty($_GET['letra']) ) {
-    $where = " WHERE cad_nome LIKE '".$_GET['letra']."%' ";
+    $where = " WHERE cad_login LIKE '".$_GET['letra']."%' ";
   }
 
 
@@ -57,13 +57,13 @@ $limit_start = ceil(($pg_atual-1)*$limit_end);
 $qry_tot->close();
 
 
-$orderby = !isset($_GET['orderby'])?$var['pre'].'_nome ASC':urldecode($_GET['orderby']);
+$orderby = !isset($_GET['orderby'])?$var['pre'].'_login ASC':urldecode($_GET['orderby']);
 
 
 $sql = "SELECT  ${var['pre']}_id,
 		${var['pre']}_nome,
+		${var['pre']}_login,
 		${var['pre']}_email,
-		${var['pre']}_nascimento,
 		DATE_FORMAT(${var['pre']}_timestamp,'%d/%m/%Y') timestamp,
 		${var['pre']}_status
 		
@@ -82,7 +82,7 @@ $sql = "SELECT  ${var['pre']}_id,
 
     #$sql->bind_param('s', $data); 
     $qry->execute();
-    $qry->bind_result($id,$nome,$email,$nascimento,$timestamp,$status);
+    $qry->bind_result($id, $nome, $login, $email, $timestamp, $status);
 
 
     switch($total_itens) {
@@ -107,8 +107,8 @@ Filtrar por: <?=$letras?>
 <select name='orderby' id='orderby' class='min'>
 <option value='<?=$var['pre'].'_timestamp'?> ASC'<?php if($orderby==$var['pre'].'_timestamp ASC') echo ' selected';?>>Data crescente</option>
   <option value='<?=$var['pre'].'_timestamp'?> DESC'<?php if($orderby==$var['pre'].'_timestamp DESC') echo ' selected';?>>Data decrescente</option>
-  <option value='<?=$var['pre'].'_nome'?> ASC'<?php if($orderby==$var['pre'].'_nome ASC') echo ' selected';?>>Nome crescente</option>
-  <option value='<?=$var['pre'].'_nome'?> DESC'<?php if($orderby==$var['pre'].'_nome DESC') echo ' selected';?>>Nome decrescente</option>
+  <option value='<?=$var['pre'].'_login'?> ASC'<?php if($orderby==$var['pre'].'_login ASC') echo ' selected';?>>Login crescente</option>
+  <option value='<?=$var['pre'].'_login'?> DESC'<?php if($orderby==$var['pre'].'_login DESC') echo ' selected';?>>Login decrescente</option>
 </select>
 </span>
 <table class="list">
@@ -116,9 +116,9 @@ Filtrar por: <?=$letras?>
       <tr>
 <!--        <th width="5px"><input type='checkbox' name='check-all' value='1'></th>-->
         <th width="35px">Cadastro</th>
-        <th style='min-width:120px;'>Nome</th>
-        <th width="50px">Idade</th>
+        <th style='min-width:120px;'>Login</th>
         <th width="55px"></th>
+        <th width="75px"></th>
       </tr>
    </thead>  
    <tbody>
@@ -129,7 +129,7 @@ Filtrar por: <?=$letras?>
     while ($qry->fetch()) {
 # | <a href='$base/$p?item=$id' title="Veja no site" class='tip view' style="cursor:pointer;">Ver</a>
 $row_actions = <<<end
-<a href='?p=$p&delete&item=$id&noVisual' title="Clique para remover o ítem selecionado" class='tip trash' style="cursor:pointer;" id="${id}" name='$nome'>Remover</a> | <a href="?p=$p&update&item=$id" title='Clique para editar o ítem selecionado' class='tip edit'>Editar</a>
+<a href='?p=$p&delete&item=$id&noVisual' title="Clique para remover o ítem selecionado" class='tip trash' style="cursor:pointer;" id="${id}" name='$login'>Remover</a> | <a href="?p=$p&update&item=$id" title='Clique para editar o ítem selecionado' class='tip edit'>Editar</a>
 end;
 $permissoes='';
 ?>
@@ -137,11 +137,25 @@ $permissoes='';
 <!--        <td><input type='checkbox' name='check' value='1'></td>-->
         <td><?=$timestamp?></td>
         <td>
-	<?=$nome?> [<a href='mailto:<?=$email?>'><?=$email?></a>]
+	<?=$login?> [<a href='mailto:<?=$email?>'><?=$email?></a>]
 	<div class='row-actions'><?=$row_actions?></div></td>
 
-        <td><?=diferencaAnos($nascimento, date('Y-m-d')).' anos'?></td>
-        <td align='center'><a href='?p=<?=$p?>&status&item=<?=$id?>&noVisual' title="Clique para alterar o status do ítem selecionado" class='tip status status<?=$id?>' style="cursor:pointer;" id="<?=$id?>" name='<?=$nome?>'><?php if ($status==1) echo'<font color="#000000">Ativo</font>'; else echo '<font color="#999999">Bloqueado</font>'; ?></a></td>
+		<td align='center'>
+			<a href='?p=<?=$p?>&status&item=<?=$id?>&noVisual' title="Clique para alterar o status do ítem selecionado" class='tip status status<?=$id?>' style="cursor:pointer;" id="<?=$id?>" name='<?=$login?>'>
+			<?php
+				if ($status==1)
+					echo'<font color="#000000">Ativo</font>';
+				else
+					echo '<font color="#999999">Bloqueado</font>';
+			?>
+			</a>
+		</td>
+		<td align='center'>
+			<a href='<?=$p?>/mod.resetsenha.php' title="Clique para zerar e enviar a senha por email ao usuário" class='tip resetsenha resetsenha<?=$id?>' style="cursor:pointer;" id="<?=$id?>" name='<?=$login?>'>
+				Zerar Senha
+			</a>
+		</td>
+
       </tr>
 
 

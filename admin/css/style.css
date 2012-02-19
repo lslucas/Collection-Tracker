@@ -342,12 +342,7 @@ a.glassbutton, .glassbuttons a {
   text-shadow: 0 -1px 1px #999999;
   border: 1px solid #dadada;
 
-} .color-positive, .blue {
-
-  color:#264409 !important;
-
-} .color-negative, .red {
-
-  color:#8A1F11 !important;
-
 }
+.color-positive, .blue { color:#264409 !important; }
+.color-negative, .red { color:#8A1F11 !important; } 
+.discret { color:#C5C5C5 !important; font-size:7pt; text-align:right; } 

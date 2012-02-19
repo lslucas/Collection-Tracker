@@ -9,21 +9,19 @@ $include_css = <<<end
      <link rel="stylesheet" href="${rp}js/bettertip/jquery.bettertip.css" type="text/css" />
      <style>
        div.growlUI { 
-	background: url(${rp}images/warning.png) no-repeat;
-	height:50px;
+		background: url(${rp}images/warning.png) no-repeat;
        } div.growlUI h1, div.growlUI h2 {
-	color: white;
-	padding: 5px 5px 5px 60px;
-	text-align: left;
-	font-family:'Tahoma';
+		color: white;
+		padding: 5px 5px 5px 60px;
+		text-align: left;
+		font-family:'Tahoma';
        } td.showDragHandle {
-	background-image: url(${rp}images/drag.gif);
-	background-repeat: no-repeat;
-	background-position: center center;
-	cursor: move;
-
+		background-image: url(${rp}images/drag.gif);
+		background-repeat: no-repeat;
+		background-position: center center;
+		cursor: move;
       }.tDnD_whileDrag {
-	background-color: #eee;
+		background-color: #eee;
       }
      </style>
 end;
@@ -157,6 +155,40 @@ $include_js = <<<end
 
 			   else
 			    $('.status'+id_status).html('<font color="#000000">Ativo</font>');
+			}
+		});
+
+
+	});
+	/* FIM: STATUS*/
+
+
+	/* ZERAR SENHA 
+	************************************/
+	$(".resetsenha").click(function(event){
+	 event.preventDefault();
+  	 var id_status = $(this).attr('id');
+  	 var href_status  = $(this).attr('href');
+
+		// BOX DE CARREGAMENTO
+		$.blockUI({
+		 message: "<img src='images/loading.gif'>",
+		 css: { 
+                   top:  ($(window).height()-24)/2+'px', 
+                   left: ($(window).width()-24)/2+'px', 
+		   width: '24px' 
+           	 } 
+		});
+
+		$.ajax({
+			type: "POST",
+			url: href_status,
+			data: 'item='+id_status,
+			success: function(data){
+			 $.unblockUI();
+			 $.growlUI('Status',data);  
+
+			   $('.resetsenha'+id_status).html('<font color="#999999">Resetado</font>');
 			}
 		});
 

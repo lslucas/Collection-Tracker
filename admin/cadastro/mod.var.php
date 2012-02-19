@@ -20,7 +20,7 @@
 
 
 
-    $field  = array('cad_id','cad_nome','cad_email','cad_nascimento','cad_telefone', 'cad_celular', 'cad_endereco', 'cad_cep','cad_cidade','cad_estado', 'cad_sexo', 'cad_estado_civil', 'cad_filhos', 'cad_facebook','cad_twitter','cad_ja_comprou');
+    $field  = array('cad_id', 'cad_login', 'cad_nome','cad_email', 'cad_status');
     $lfield = implode(',',$field);
     $vfield = implode(',$',$field);
     $vfield = '$'.$vfield;
@@ -41,11 +41,10 @@
  }
 
 
-# DEFINE OS VALORES DE CADA CAMPO
-   for($i=0;$i<count($field);$i++) {
-    $sufix_field = str_replace($var['pre'].'_','',$field[$i]);
-    $val[$sufix_field] = isset($row[$field[$i]])?$row[$field[$i]]:'';
-   }
-
-
-?>
+	/*
+	 *DEFINE OS VALORES DE CADA CAMPO
+	 */
+	for($i=0;$i<count($field);$i++) {
+		$sufix_field = str_replace($var['pre'].'_','',$field[$i]);
+		$val[$sufix_field] = isset($row[$field[$i]])?$row[$field[$i]]:'';
+	}
