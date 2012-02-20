@@ -17,9 +17,11 @@ include_once $rp.'cadastro/mod.var.php';
 	 */
 	if (isset($_SESSION['ct']['login']) && !empty($_SESSION['ct']['login'])) {
 
+		$resp = null;
 		foreach ($_SESSION['ct'] as $key=>$val)
-			echo $key.'='.$val."\n";
+			$resp .= $key.'='.$val."&";
 
+		echo substr($resp, 0, -1);
 		die();
 
 	} else
@@ -90,7 +92,8 @@ include_once $rp.'cadastro/mod.var.php';
 				 */
 				$sql_updlogin = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_ultimo_login=NOW()";
 				if (!$qry_updlogin=$conn->prepare($sql_updlogin))
-				   echo $conn->error;
+				   echo 'Houve um erro ao tentar atualizar ultimo login. Contate o desenvolvedor';
+				   //echo $conn->error;
 
 				else {
 
@@ -105,8 +108,11 @@ include_once $rp.'cadastro/mod.var.php';
 					$_SESSION['ct']['dataCadastro'] = $dt_cadastro;
 					$_SESSION['ct']['dataUltimoLogin'] = $dt_ultimoLogin;
 
+					$resp = null;
 					foreach ($_SESSION['ct'] as $key=>$val)
-						echo $key.'='.$val."\n";
+						$resp .= $key.'='.$val."&";
+
+					echo substr($resp, 0, -1);
 
 				}
 
