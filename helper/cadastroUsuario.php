@@ -1,6 +1,6 @@
 <?php
 /*
- *RESET PASSWORD
+ * NEW USER
  */
 $rp			= '../admin/';
 $_GET['p']  = 'cadastro';
@@ -8,8 +8,11 @@ $_GET['p']  = 'cadastro';
 include_once $rp.'_inc/global.php';
 include_once $rp.'_inc/db.php';
 include_once $rp.'_inc/global_function.php';
+require_once $rp.'_inc/class.password.php';
 include_once $rp.'cadastro/mod.var.php';
 
+	if (!isset($_REQUEST['login']) || !isset($_REQUEST['senha']) || !isset($_REQUEST['email']))
+		die('Atenção: Faltam parâmetros!');
 
 	$res['login'] = trim($_REQUEST['login']);
 	$res['senha'] = trim($_REQUEST['senha']);
@@ -26,71 +29,83 @@ include_once $rp.'cadastro/mod.var.php';
 
 	else {
 
-		$sql = "SELECT ${var['pre']}_id, ${var['pre']}_login, ${var['pre']}_email FROM ".TABLE_PREFIX."_${var['path']} ";
-		$sql.=" WHERE ${var['pre']}_login=?";
+		$sql = "SELECT NULL FROM ".TABLE_PREFIX."_${var['path']} ";
+		$sql.=" WHERE ${var['pre']}_login=? OR ${var['pre']}_email=?";
 
 		if (!$qry=$conn->prepare($sql))
-		   die($conn->error);
+			die('Houve um erro na tentativa de realizar a consulta de cadastro! Contate o desenvolvedor.');
 
 		else {
-			$qry->bind_result($item, $login, $email);
-			$qry->bind_param('s', $res['login']);
+			$qry->bind_param('ss', $res['login'], $res['email']);
 			$qry->execute();
+			$qry->store_result();
+			$num = $qry->num_rows;
 			$qry->fetch();
 			$qry->close();
 		}
 
-
-		$senha	      = gera_senha(4);
-		$res['senha'] = md5($senha);
-
-		$sql_senha = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_senha=?";
-		$sql_senha.=" WHERE ${var['pre']}_id=?";
-
-		if (!$qry_senha=$conn->prepare($sql_senha))
-		   echo $conn->error;
+		if ($num>0)
+			echo "Já existe um usuário com o login ({$res['login']}) ou email ({$res['email']})";
 
 		else {
 
-			$qry_senha->bind_param('si', $res['senha'], $item); 
-			$qry_senha->execute();
-			$qry_senha->close();
+			$password   = new Password;
+			$senha	    = $res['senha'];
+			$securePass = $password->hash($senha, 'mcrypt', SITE_NAME.'salt');
 
 			/*
-			 *html do email
+			 *SQL cadastro
 			 */
-			$email_subject = SITE_NAME.": Nova senha de acesso!";
-			$msg = $user_email_header;
-			$msg .= "
-				 <center><img src='".URL_ADMLOGO."'></center><p />
-				 Olá ".$login.", sua senha foi alterada!
+			$sql= "INSERT INTO ".TABLE_PREFIX."_${var['path']}
+					(${var['pre']}_nome, ${var['pre']}_login, ${var['pre']}_email, ${var['pre']}_senha)
+					VALUES (?, ?, ?, ?) ";
 
-				 <p><b>Usuário:</b> ".$login."
-				 <br><b>Senha:</b> ".$senha." 
-				 <br><b>URL:</b> <a href='".SITE_URL."' target='_blank'>".SITE_URL."</a>
-				";
-			$msg .= $user_email_footer;
+			if (!$qry=$conn->prepare($sql))
+				echo 'Houve um erro na tentativa de realizar o cadastro! Contate o desenvolvedor.';
+				//echo $conn->error;
+
+			else {
+
+			 $qry->bind_param('ssss', $res['nome'], $res['login'], $res['email'], $securePass); 
+			 $qry->execute();
+			 $qry->close();
+
+				/*
+				 *html do email
+				 */
+				$email_subject = SITE_NAME.": Nova senha de acesso!";
+				$msg = $user_email_header;
+				$msg .= "
+					 <center><img src='".URL_ADMLOGO."'></center><p />
+					 Olá ".$res['login'].", sua senha foi alterada!
+
+					 <p><b>Usuário:</b> ".$res['login']."
+					 <br><b>Senha:</b> ".$senha." 
+					 <br><b>URL:</b> <a href='".SITE_URL."' target='_blank'>".SITE_URL."</a>
+					";
+				$msg .= $user_email_footer;
 
 
-			/*
-			 *vars to send a email
-			 */
-			$htmlMensage= utf8_decode($msg);
-			$subject	= utf8_decode($email_subject);
-			$fromEmail	= EMAIL;
-			$fromName	= utf8_decode(SITE_NAME);
-			$toName		= utf8_decode($login);
-			$toEmail	= $email;
+				/*
+				 *vars to send a email
+				 */
+				$htmlMensage= utf8_decode($msg);
+				$subject	= utf8_decode($email_subject);
+				$fromEmail	= EMAIL;
+				$fromName	= utf8_decode(SITE_NAME);
+				$toName		= utf8_decode($res['login']);
+				$toEmail	= $res['email'];
 
-			include_once $rp.'inc.sendmail.header.php';
+				include_once $rp.'inc.sendmail.header.php';
 
-			if ($sended)
-				echo 'Senha resetada e enviada a '.$email;
+				if ($sended)
+					echo 'Cadastro realizado com êxito!';
 
-			else
-				echo 'Senha resetada MAS não foi enviada ao email '.$email;
+				else
+					echo 'Cadastro realizado mas não foi possível enviar confirmação ao email: '.$res['email'];
 
-		 }
+			}
 
+		}
 
 	}
