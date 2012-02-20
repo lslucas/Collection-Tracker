@@ -5,7 +5,7 @@
  */
 function validaLogin($str)
 {
-	return preg_match('/^[a-zA-Z0-9_.]+$/', $str);
+	return preg_match('/^[\w.]+$/', $str);
 }
 
 
