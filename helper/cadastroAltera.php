@@ -12,6 +12,7 @@ include_once $rp.'_inc/global_function.php';
 require_once $rp.'_inc/class.password.php';
 include_once $rp.'cadastro/mod.var.php';
 
+
 	/*
 	 *antes de tudo verifica se está logado
 	 */
