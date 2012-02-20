@@ -1,5 +1,15 @@
 <?php
 /*
+ *valida login
+ * return: alphanumeric, point and underescore
+ */
+function validaLogin($str)
+{
+	return preg_match('/^[a-zA-Z0-9_.]+$/', $str);
+}
+
+
+/*
  *Retorna xml do video
  */
 function getYoutubeVideoId($url) {
