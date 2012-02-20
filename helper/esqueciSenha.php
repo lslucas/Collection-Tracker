@@ -21,7 +21,8 @@ include_once $rp.'cadastro/mod.var.php';
 		$sql.=" WHERE ${var['pre']}_login=?";
 
 		if (!$qry=$conn->prepare($sql))
-		   die($conn->error);
+			die('Houve um erro na tentativa de realizar a consulta de cadastro! Contate o desenvolvedor.');
+			//die($conn->error);
 
 		else {
 			$qry->bind_result($item, $login, $email);
