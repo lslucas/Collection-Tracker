@@ -26,9 +26,16 @@ include_once $rp.'cadastro/mod.var.php';
 		unset($_SESSION['ct']);
 
 
+	/*
+	 *verifica se todos os parametros estao ok
+	 */
 	if (!isset($_REQUEST['login']) || !isset($_REQUEST['senha']))
 		die('Atenção: Faltam parâmetros!');
 
+
+	/*
+	 *começa as validações
+	 */
 	$res['login'] = trim($_REQUEST['login']);
 	$res['senha'] = trim($_REQUEST['senha']);
 
