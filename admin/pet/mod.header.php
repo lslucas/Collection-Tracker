@@ -42,8 +42,6 @@ $include_js = <<<end
     <script type="text/javascript" src="${rp}js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
     <script type="text/javascript" src="${rp}js/jquery.validate.min.js"></script>
     
-    
-
 <script>
   $(function(){
       // validação do formulario, todos os campos com a classe
@@ -76,51 +74,6 @@ $include_js = <<<end
       });
 
 
-	function checkHoroscopo(id) {
-		if (id==12) {
-			$('.horoscopo').slideDown();
-			$('#signo').removeAttr('disabled');
-			$('.anti-horoscopo').slideUp();
-			$('.anti-horoscopo').find('input, select, textarea').attr('disabled', true);
-
-		} else {
-			$('.horoscopo').slideUp();
-			$('#signo').attr('disabled', true);
-			$('.anti-horoscopo').slideDown();
-			$('.anti-horoscopo').find('input, select, textarea').removeAttr('disabled');
-		}
-
-	}
-
-
-	function checkTV(id) {
-		if (id==13) {
-			$('.tv').slideDown();
-			$('#video').removeAttr('disabled');
-			$('.anti-tv').slideUp();
-			$('.anti-tv').find('input, select, textarea').attr('disabled', true);
-			$('.tv-unblock').find('input, select, textarea').removeClass('required');
-
-		} else {
-			$('.tv').slideUp();
-			$('#video').attr('disabled', true);
-			$('.anti-tv').slideDown();
-			$('.anti-tv').find('input, select, textarea').removeAttr('disabled');
-			$('.tv-unblock').find('input, select, textarea').addClass('required');
-
-		}
-
-	}
-
-	checkHoroscopo($('#area').val());
-	$('#area').change(function() {
-		checkHoroscopo($(this).val());
-	});
-
-	checkTV($('#area').val());
-	$('#area').change(function() {
-		checkTV($(this).val());
-	});
 
     // ao arrastar alguma linha altera a posição dos elementos
     // e altera na banco
