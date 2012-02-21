@@ -10,7 +10,7 @@ $filter = new Zend_Filter_ImageSize();
    $sqlImagem = '';
    $w=$pos=0;
 
-   $sql_smod = "SELECT rag_pos, rag_imagem FROM ".TABLE_PREFIX."_r_${var['pre']}_galeria WHERE rag_${var['pre']}_id=? ORDER BY rag_pos DESC LIMIT 1";
+   $sql_smod = "SELECT rpg_pos, rpg_imagem FROM ".TABLE_PREFIX."_r_${var['pre']}_galeria WHERE rpg_${var['pre']}_id=? ORDER BY rpg_pos DESC LIMIT 1";
    $qry_smod = $conn->prepare($sql_smod);
    $qry_smod->bind_param('i',$res['item']);
    $qry_smod->execute();
@@ -23,10 +23,10 @@ $filter = new Zend_Filter_ImageSize();
 
        $sql= "INSERT INTO ".TABLE_PREFIX."_r_${var['pre']}_galeria 
 
-		    (rag_${var['pre']}_id,
-		     rag_imagem,
-		     rag_legenda,
-		     rag_pos
+		    (rpg_${var['pre']}_id,
+		     rpg_imagem,
+		     rpg_legenda,
+		     rpg_pos
 		     )
 		    VALUES (?, ?, ?, ?)";
        $qry=$conn->prepare($sql);
