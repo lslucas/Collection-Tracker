@@ -3,6 +3,7 @@
  if (isset($_FILES)) {
 
 require_once 'Zend/Filter/ImageSize.php';
+require_once 'Zend/Filter/ImageSize/Strategy/Crop.php';
 $filter = new Zend_Filter_ImageSize();
 
 
@@ -40,14 +41,14 @@ $filter = new Zend_Filter_ImageSize();
 			$filename = $res['item'].'_'.rand();
 
 
-			$output = $filter->setHeight(100)
-				->setWidth(200)
+			$output = $filter->setHeight($var['imagemWidth'])
+				->setWidth($var['imagemWidth'])
 				->setQuality(75)
 				->setOverwriteMode(Zend_Filter_ImageSize::OVERWRITE_ALL)
-				->setThumnailDirectory('./')
+				->setThumnailDirectory($var['path_imagem'])
 				->setType('jpeg')
 				->setStrategy(new Zend_Filter_Imagesize_Strategy_Crop())
-				->filter('./orig.jpg');
+				->filter($_FILES['galeria'.$i);
 
 
 			$handle = new Upload($_FILES['galeria'.$i]);

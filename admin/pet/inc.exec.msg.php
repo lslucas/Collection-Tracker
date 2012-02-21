@@ -7,7 +7,7 @@ $nomeAcao = $act=='insert'?'incluido':'alterado';
 
 $msgDuplicado = <<<end
 
- <p class='error'>Já existe $var[um] com o título <b>- $res[titulo] -</b></p>
+ <p class='error'>Já existe $var[um] com o título <b>- $res[nome] -</b></p>
  <br>
  <p align='center'>
   <a href='?p=$p&insert'>Volte e preencha novamente</a> - <a href='?p=$p'>Ir para a listagem</a>

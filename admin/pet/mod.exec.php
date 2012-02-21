@@ -30,7 +30,6 @@
 
 
     $texto = isset($res['texto']) && !empty($res['texto']) ? txt_bbcode($res['texto']) : null;
-    $linhafina = strip_tags($res['linhafina']);
     
     $sql= "UPDATE ".TABLE_PREFIX."_${var['path']} SET
 
