@@ -48,7 +48,7 @@ $filter = new Zend_Filter_ImageSize();
 				->setThumnailDirectory($var['path_imagem'])
 				->setType('jpeg')
 				->setStrategy(new Zend_Filter_Imagesize_Strategy_Crop())
-				->filter($_FILES['galeria'.$i);
+				->filter($_FILES['galeria'.$i]);
 
 
 			$handle = new Upload($_FILES['galeria'.$i]);
