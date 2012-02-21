@@ -3,7 +3,7 @@
    $res[$chave] = $valor;
   }
 
- $sql_guarda = "SELECT ${var['pre']}_titulo FROM ".TABLE_PREFIX."_${var['path']} WHERE ${var['pre']}_id=?";
+ $sql_guarda = "SELECT ${var['pre']}_nome FROM ".TABLE_PREFIX."_${var['path']} WHERE ${var['pre']}_id=?";
  $qry_guarda = $conn->prepare($sql_guarda);
  $qry_guarda->bind_param('i', $res['item']); 
  $ok = $qry_guarda->execute()==true?true:false;
