@@ -81,7 +81,7 @@
     
     		 <div class='divImagem'>
     		   <input class="galeria" type='file' name='galeria0' id='galeria' alt='0' style="height:18px;font-size:7pt;margin-bottom:8px; width:500px;">
-    		   <br clear='all'/><input class="legenda" type='text' name='legenda0' id='legenda' alt='0' style="height:18px;font-size:7pt;margin-bottom:8px; width:500px;">
+    		   <!--<br clear='all'/><input class="legenda" type='text' name='legenda0' id='legenda' alt='0' style="height:18px;font-size:7pt;margin-bottom:8px; width:500px;">-->
     		   <br><span class='small'>- JPEG, PNG ou GIF;<?=$var['imagemWidth_texto'].$var['imagemHeight_texto']?></span>
     		   <hr noshade size=1 style='border-color:#C4C4C4; background-color:#FFF; width:520px;'/>
     		 </div>

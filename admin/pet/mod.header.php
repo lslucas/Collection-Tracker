@@ -72,7 +72,7 @@ $include_js = <<<end
 
         $('.divImagem:first').clone().insertAfter('.divImagem:last');
         $('.divImagem:last > .galeria').attr('name','galeria'+(i+1)).attr('alt',(i+1)).val('');
-        $('.divImagem:last > .legenda').attr('name','legenda'+(i+1)).attr('alt',(i+1)).val('');
+        //$('.divImagem:last > .legenda').attr('name','legenda'+(i+1)).attr('alt',(i+1)).val('');
       });
 
 
