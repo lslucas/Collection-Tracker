@@ -107,14 +107,16 @@
     	  <input type='text' name='nome' id='nome' class='required' value='<?=$val['nome']?>'>
     	</li>
     
+    <!--
         <li>
     	  <label>URL<span class='small'>Link do produto</span></label>
-    	  <input type='text' name='url' id='url' class='required url' value='<?=$val['url']?>'>
+    	  <input type='text' name='url' id='url' class=' url' value='<?=$val['url']?>'>
     	</li>
+    -->
         
     	<li>
-    	  <label>Resumo *<span class='small'>Digite o resumo para a listagem</span></label>
-    	  <textarea name='resumo' id='resumo' class='required' cols='80' rows='10'><?=stripslashes($val['resumo'])?></textarea>
+    	  <label>Texto *<span class='small'>Digite o texto descritivo</span></label>
+    	  <textarea name='texto' id='texto' class='required' cols='80' rows='10'><?=stripslashes($val['texto'])?></textarea>
     	</li>
 
     </ol>
@@ -126,6 +128,4 @@
     <div class='spacer'></div>
 
 
-</form>
-
-
+</form> 
