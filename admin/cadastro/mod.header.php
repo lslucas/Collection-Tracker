@@ -163,7 +163,7 @@ $include_js = <<<end
 	/* FIM: STATUS*/
 
 
-	/* ZERAR SENHA 
+	/* Reenviar SENHA 
 	************************************/
 	$(".resetsenha").click(function(event){
 	 event.preventDefault();
@@ -188,7 +188,7 @@ $include_js = <<<end
 			 $.unblockUI();
 			 $.growlUI('Status',data);  
 
-			   $('.resetsenha'+id_status).html('<font color="#999999">Resetado</font>');
+			   $('.resetsenha'+id_status).html('<font color="#999999">Reenviado</font>');
 			}
 		});
 

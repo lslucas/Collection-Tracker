@@ -151,8 +151,8 @@ $permissoes='';
 			</a>
 		</td>
 		<td align='center'>
-			<a href='<?=$p?>/mod.resetsenha.php' title="Clique para zerar e enviar a senha por email ao usuário" class='tip resetsenha resetsenha<?=$id?>' style="cursor:pointer;" id="<?=$id?>" name='<?=$login?>'>
-				Zerar Senha
+			<a href='<?=$p?>/mod.resetsenha.php' title="Clique para reenviar a senha por email ao usuário" class='tip resetsenha resetsenha<?=$id?>' style="cursor:pointer;" id="<?=$id?>" name='<?=$login?>'>
+				Reenviar Senha
 			</a>
 		</td>
 

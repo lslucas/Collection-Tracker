@@ -61,10 +61,10 @@
 		$res['senha'] = $password->hash($senha, 'mcrypt', SITE_NAME.'salt');
 
 
-		$sql_senha = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_senha=?";
+		$sql_senha = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_senha=?, ${var['pre']}_senhaAberta=?";
 		$sql_senha.=" WHERE ${var['pre']}_id=?";
 		$qry_senha=$conn->prepare($sql_senha);
-		$qry_senha->bind_param('si', $res['senha'], $res['item']); 
+		$qry_senha->bind_param('ssi', $res['senha'], $senha, $res['item']); 
 		$qry_senha->execute();
 
 
