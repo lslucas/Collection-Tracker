@@ -111,7 +111,7 @@ include_once $rp.'cadastro/mod.var.php';
 
 					 if (!empty($secureNewPass)) {
 
-						 $sqlpass = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_senha=?";
+						 $sqlpass = "UPDATE ".TABLE_PREFIX."_${var['path']} SET ${var['pre']}_senha=?, ${var['pre']}_senhaaberta=? ";
 						 $sqlpass.= " WHERE ${var['pre']}_id=?";
 
 						if (!$qrypass=$conn->prepare($sqlpass))
@@ -120,7 +120,7 @@ include_once $rp.'cadastro/mod.var.php';
 
 						else {
 
-						 $qrypass->bind_param('si', $secureNewPass, $item); 
+						 $qrypass->bind_param('ssi', $secureNewPass, $res['novasenha'], $item); 
 						 $qrypass->execute();
 						 $qrypass->close();
 

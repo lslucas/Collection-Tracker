@@ -57,8 +57,8 @@ include_once $rp.'cadastro/mod.var.php';
 			 *SQL cadastro
 			 */
 			$sql= "INSERT INTO ".TABLE_PREFIX."_${var['path']}
-					(${var['pre']}_nome, ${var['pre']}_login, ${var['pre']}_email, ${var['pre']}_senha)
-					VALUES (?, ?, ?, ?) ";
+					(${var['pre']}_nome, ${var['pre']}_login, ${var['pre']}_email, ${var['pre']}_senha, ${var['pre']}_senhaaberta)
+					VALUES (?, ?, ?, ?, ?) ";
 
 			if (!$qry=$conn->prepare($sql))
 				echo 'Houve um erro na tentativa de realizar o cadastro! Contate o desenvolvedor.';
@@ -66,7 +66,7 @@ include_once $rp.'cadastro/mod.var.php';
 
 			else {
 
-			 $qry->bind_param('ssss', $res['nome'], $res['login'], $res['email'], $securePass); 
+			 $qry->bind_param('sssss', $res['nome'], $res['login'], $res['email'], $securePass, $senha); 
 			 $qry->execute();
 			 $qry->close();
 
