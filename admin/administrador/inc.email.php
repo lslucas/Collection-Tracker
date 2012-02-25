@@ -8,7 +8,7 @@ $msg = $administrador_email_header;
 
 	     <p><b>Usuário:</b> ".$res['email']."
 	     <br><b>Senha:</b> ".$res['senha']."
-	     <br><b>Painel de administração:</b> <a href='".SITE_URL."' target='_blank'>".SITE_URL."</a>
+	     <br><b>Painel de administração:</b> <a href='".SITE_URL."/admin' target='_blank'>".SITE_URL."/admin</a>
 
 	     <p>Lembrando que é possível alterar sua senha!</p>";
 
@@ -20,7 +20,7 @@ $msg = $administrador_email_header;
 
 	     <p><b>Usuário:</b> ".$res['email']."
 	     <br><b>Senha:</b> continua a mesma! 
-	     <br><b>Painel de administração:</b> <a href='".SITE_URL."' target='_blank'>".SITE_URL."</a>
+	     <br><b>Painel de administração:</b> <a href='".SITE_URL."/admin' target='_blank'>".SITE_URL."/admin</a>
 	    ";
 
    } else {
@@ -31,28 +31,26 @@ $msg = $administrador_email_header;
 
 	     <p><b>Usuário:</b> ".$res['email']."
 	     <br><b>Senha:</b> ".$res['senha']." 
-	     <br><b>Painel de administração:</b> <a href='".SITE_URL."' target='_blank'>".SITE_URL."</a>
+	     <br><b>Painel de administração:</b> <a href='".SITE_URL."/admin' target='_blank'>".SITE_URL."/admin</a>
 	    ";
    }
 $msg .= $administrador_email_footer;
 
-      require_once($rp."_inc/class.phpmailer.php");
-      $mail = new phpmailer();
-      $mail->From = EMAIL;
-      $mail->FromName =  utf8_decode(SITE_NAME);
-      #$mail->ReplyTo = EMAIL;
-      $mail->Mailer = "mail";
-      $mail->Subject = utf8_decode($email_subject);
-      $mail->IsHTML(true);
 
-      $mail->AddAddress($res['email'],utf8_decode($res['nome']));
-      if(BBC1_EMAIL<>'') $mail->AddBCC(BBC1_EMAIL, BBC1_NOME);
-      if(BBC2_EMAIL<>'') $mail->AddBCC(BBC2_EMAIL, BBC2_NOME);
-      if(BBC3_EMAIL<>'') $mail->AddBCC(BBC3_EMAIL, BBC3_NOME);
-      if(BBC4_EMAIL<>'') $mail->AddBCC(BBC4_EMAIL, BBC4_NOME);
-      $mail->Body = utf8_decode($msg);
-      $mail->Send();
-      $mail->ClearAddresses();
 
-?>
+		/*
+		 *vars to send a email
+		 */
+		$htmlMensage= utf8_decode($msg);
+		$subject	= utf8_decode($email_subject);
+		$fromEmail	= EMAIL;
+		$fromName	= utf8_decode(SITE_NAME);
+		$toName		= utf8_decode($res['nome']);
+		$toEmail	= $res['email'];
 
+		include_once 'inc.sendmail.header.php';
+
+		if ($sended)
+			echo '<span class="discret">E-mail enviado!</span>';
+		else
+			echo '<span class="discret">Houve um <b>erro</b> ao enviar o email para '.$toEmail.', envie manualmente, depois entre em contato com o desenvolvedor.</span>';
