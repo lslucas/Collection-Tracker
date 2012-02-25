@@ -135,6 +135,7 @@ $include_js = <<<end
 			 $.unblockUI();
 			 $.growlUI('Remoção',data);  
 			 $('#'+id_trash).hide();
+			 setTimeout(window.location.reload(), 3000);
 			}
 		});
 
