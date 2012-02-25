@@ -2,11 +2,8 @@
 
  if (isset($_FILES)) {
 
-require_once 'Zend/Filter/ImageSize.php';
-require_once 'Zend/Filter/ImageSize/Strategy/Crop.php';
-$filter = new Zend_Filter_ImageSize();
 
-
+  include_once "_inc/class.upload.php";
    $sqlImagem = '';
    $w=$pos=0;
 
@@ -41,18 +38,8 @@ $filter = new Zend_Filter_ImageSize();
 			$filename = $res['item'].'_'.rand();
 
 
-			$output = $filter->setHeight($var['imagemWidth'])
-				->setWidth($var['imagemWidth'])
-				->setQuality(75)
-				->setOverwriteMode(Zend_Filter_ImageSize::OVERWRITE_ALL)
-				->setThumnailDirectory($var['path_imagem'])
-				->setType('jpeg')
-				->setStrategy(new Zend_Filter_Imagesize_Strategy_Crop())
-				->filter($_FILES['galeria'.$i]);
 
-
-			$handle = new Upload($_FILES['galeria'.$i]);
-
+		$handle = new Upload($_FILES['galeria'.$i]);
 		 // then we check if the file has been uploaded properly
 		 // in its *temporary* location in the server (often, it is /tmp)
 		 if ($handle->uploaded) {
@@ -82,41 +69,13 @@ $filter = new Zend_Filter_ImageSize();
 		   $handle->file_new_name_body  = $filename;
 		   $handle->image_resize        = true;
 		   $handle->image_ratio_fill    = '#FFFFFF';
-		   $handle->image_x             = $var['homeWidth'];
-		   $handle->image_y             = $var['homeHeight'];
-		   $handle->jpeg_quality        = 90;
-		   $handle->process($var['path_home']);
-		   if (!$handle->processed) echo 'error : ' . $handle->error;
-
-		   $handle->file_new_name_body  = $filename;
-		   $handle->image_resize        = true;
-		   $handle->image_ratio_fill    = '#FFFFFF';
 		   $handle->image_x             = $var['bigWidth'];
 		   $handle->image_y             = $var['bigHeight'];
 		   $handle->jpeg_quality        = 90;
 		   $handle->process($var['path_big']);
 		   if (!$handle->processed) echo 'error : ' . $handle->error;
 
-		   $handle->file_new_name_body  = $filename;
-		   $handle->image_resize        = true;
-		   $handle->image_ratio_crop    = true;
-		   $handle->image_x             = $var['largeWidth'];
-		   $handle->image_y             = $var['largeHeight'];
-		   $handle->jpeg_quality        = 90;
-		   $handle->process($var['path_large']);
-		   if (!$handle->processed) echo 'error : ' . $handle->error;
-
-		   $handle->file_new_name_body  = $filename;
-		   $handle->image_resize        = true;
-		   $handle->image_ratio_fill    = '#EBEBEB';
-		   $handle->image_background_color = '#EBEBEB';
-		   $handle->image_x             = $var['relWidth'];
-		   $handle->image_y             = $var['relHeight'];
-		   $handle->jpeg_quality        = 90;
-		   $handle->process($var['path_rel']);
-		   if (!$handle->processed) echo 'error : ' . $handle->error;
-
-			 $imagem = $handle->file_dst_name;
+			$imagem = $handle->file_dst_name;
 
 
 			 $qry->bind_param('issi', $res['item'], $imagem, $legenda, $pos); 

@@ -116,7 +116,7 @@
         
     	<li>
     	  <label>Texto *<span class='small'>Digite o texto descritivo</span></label>
-    	  <textarea name='texto' id='texto' class='required' cols='80' rows='10'><?=stripslashes($val['texto'])?></textarea>
+    	  <textarea name='texto' id='texto' class='tinymce required' cols='80' rows='10'><?=stripslashes($val['texto'])?></textarea>
     	</li>
 
     </ol>
